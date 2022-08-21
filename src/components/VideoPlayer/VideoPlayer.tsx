@@ -14,16 +14,17 @@ const VideoPlayer: React.FC<{}> = () => {
     startTimestamp: 0,
   });
 
-  const _onVideoStateChange = (data: YouTubeEvent) => {
-    console.log(data.target.getCurrentTime());
-
-    setState({ ...state, startTimestamp: data.target.getCurrentTime() * 1000 });
+  const _onVideoStateChange = (data: YouTubeEvent) => {    
+    setState({ ...state,
+      startTimestamp: data.target.getCurrentTime() * 1000,
+      playing: data.target.getPlayerState() === 1
+    });
   };
 
   return (
     <>
       <YouTube videoId="f-s_Vv82yFw" onStateChange={_onVideoStateChange} />
-      <SubtitlePlayer startTimestamp={state.startTimestamp} />
+      <SubtitlePlayer startTimestamp={state.startTimestamp} playing={state.playing} />
     </>
   );
 };

@@ -4,6 +4,7 @@ import './SubtitlePlayer.module.scss';
 
 interface SubtitlePlayerProps {
   startTimestamp: number;
+  playing: boolean;
 }
 
 interface SubtitlePlayerState {
@@ -25,7 +26,8 @@ class SubtitlePlayer extends React.Component<SubtitlePlayerProps, SubtitlePlayer
   constructor(props: SubtitlePlayerProps) {
     super(props);
     this._lyricId = 0;
-    this._Mounted = false;
+    this._mounted = false;
+    this._playing = false;
     this.state = {
       time: this.props.startTimestamp,
       lyric: undefined
@@ -35,11 +37,12 @@ class SubtitlePlayer extends React.Component<SubtitlePlayerProps, SubtitlePlayer
   private _interval?: number;
   private _lyrics?: Lyrics[];
   private _lyricId: number;
-  private _Mounted: boolean;
+  private _mounted: boolean;
+  private _playing: boolean;
 
   componentDidMount() {
-    if (!this._Mounted) {
-      this._Mounted = true;
+    if (!this._mounted) {
+      this._mounted = true;
       this._loadAndPlay();
     }
   }
@@ -49,10 +52,14 @@ class SubtitlePlayer extends React.Component<SubtitlePlayerProps, SubtitlePlayer
       this.setState({ time: this.props.startTimestamp });
       this._findNextLyric(0);
     }
+    if (prevProps.playing != this.props.playing) {
+      if (this.props.playing) this._play();
+      else this._stop();
+    }
   }
 
   componentWillUnmount() {
-    if (!!this._interval) clearInterval(this._interval);
+    this._stop();
   }
 
   render() {
@@ -65,7 +72,21 @@ class SubtitlePlayer extends React.Component<SubtitlePlayerProps, SubtitlePlayer
 
   private async _loadAndPlay() {
     await this._loadLyrics();
-    this._interval = setInterval(this._beat.bind(this), UPDATE_INTERVAL);
+    if (this.props.playing) this._play();
+  }
+
+  private _play() {
+    if (!this._playing) {
+      this._playing = true;
+      this._interval = setInterval(this._beat.bind(this), UPDATE_INTERVAL);
+    }
+  }
+
+  private _stop() {
+    if (this._playing && !!this._interval) {
+      this._playing = false;
+      clearInterval(this._interval);
+    }
   }
 
   private async _loadLyrics() {
