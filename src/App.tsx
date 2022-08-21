@@ -1,9 +1,9 @@
 import './App.scss';
-import VideoPlayer from './components/VideoPlayer/VideoPlayer.lazy';
+import SubtitlePlayer from './components/SubtitlePlayer/SubtitlePlayer.lazy';
 
 function App() {
   return (
-    <VideoPlayer />
+    <SubtitlePlayer />
   );
 }
 
