@@ -2,7 +2,9 @@ import parseSRT from 'parse-srt';
 import React from 'react';
 import './SubtitlePlayer.module.scss';
 
-interface SubtitlePlayerProps { }
+interface SubtitlePlayerProps {
+  startTimestamp: number;
+}
 
 interface SubtitlePlayerState {
   time: number;
@@ -25,7 +27,7 @@ class SubtitlePlayer extends React.Component<SubtitlePlayerProps, SubtitlePlayer
     this._lyricId = 0;
     this._Mounted = false;
     this.state = {
-      time: 0,
+      time: this.props.startTimestamp,
       lyric: undefined
     };
   }
@@ -48,6 +50,7 @@ class SubtitlePlayer extends React.Component<SubtitlePlayerProps, SubtitlePlayer
 
   render() {
     return <div>
+      <p>{this.props.startTimestamp}</p>
       <p>Time: {this.state?.time}</p>
       <p>Text: {this.state?.lyric?.text}</p>
     </div>;
