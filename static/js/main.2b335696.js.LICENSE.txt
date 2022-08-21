@@ -1,3 +1,14 @@
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+
+/**
+   * @name parseSRT
+   * @desc Parses and converts SRT subtitle data into JSON format. Adapted from the popcorn.js SRT parser plugin.
+   * @see http://popcornjs.org/
+   * @author Luis Rodrigues (http://www.luisrodriguesweb.com)
+   * @version 1.0.0-alpha
+   * @license MIT
+   */
+
 /**
  * @license React
  * react-dom.production.min.js
@@ -37,3 +48,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+/**
+* @link https://github.com/gajus/sister for the canonical source repository
+* @license https://github.com/gajus/sister/blob/master/LICENSE BSD 3-Clause
+*/
