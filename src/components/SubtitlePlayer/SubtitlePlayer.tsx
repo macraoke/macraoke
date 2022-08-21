@@ -32,7 +32,7 @@ class SubtitlePlayer extends React.Component<SubtitlePlayerProps, SubtitlePlayer
     };
   }
 
-  private _interval?: NodeJS.Timer;
+  private _interval?: number;
   private _lyrics?: Lyrics[];
   private _lyricId: number;
   private _Mounted: boolean;
@@ -41,6 +41,13 @@ class SubtitlePlayer extends React.Component<SubtitlePlayerProps, SubtitlePlayer
     if (!this._Mounted) {
       this._Mounted = true;
       this._loadAndPlay();
+    }
+  }
+
+  componentDidUpdate(prevProps: SubtitlePlayerProps) {
+    if (prevProps.startTimestamp != this.props.startTimestamp) {
+      this.setState({ time: this.props.startTimestamp });
+      this._findNextLyric(0);
     }
   }
 
