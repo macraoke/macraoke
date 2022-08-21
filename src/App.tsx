@@ -1,9 +1,17 @@
-import './App.scss';
-import VideoPlayer from './components/VideoPlayer/VideoPlayer.lazy';
+import "./App.scss";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
+import VideoPlayer from "./components/VideoPlayer/VideoPlayer.lazy";
 
 function App() {
   return (
-    <VideoPlayer />
+    <>
+      <Header />
+      <div className="player">
+        <VideoPlayer />
+      </div>
+      <Footer />
+    </>
   );
 }
 
