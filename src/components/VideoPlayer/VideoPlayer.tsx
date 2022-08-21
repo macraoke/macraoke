@@ -1,39 +1,31 @@
-import React from 'react';
-import YouTube, { YouTubeEvent } from 'react-youtube';
-import SubtitlePlayer from '../SubtitlePlayer/SubtitlePlayer';
-import './VideoPlayer.module.scss';
-
-interface VideoPlayerProps { }
+import React, { useState } from "react";
+import YouTube, { YouTubeEvent } from "react-youtube";
+import SubtitlePlayer from "../SubtitlePlayer/SubtitlePlayer";
+import "./VideoPlayer.module.scss";
 
 interface VideoPlayerState {
   playing: boolean;
   startTimestamp: number;
 }
 
-class VideoPlayer extends React.Component<VideoPlayerProps, VideoPlayerState> {
+const VideoPlayer: React.FC<{}> = () => {
+  const [state, setState] = useState<VideoPlayerState>({
+    playing: false,
+    startTimestamp: 0,
+  });
 
-  constructor(props: VideoPlayerProps) {
-    super(props);
-    this.state = { playing: false, startTimestamp: 0 };
-  }
-
-  render(): React.ReactNode {
-    return (<div>
-      <YouTube
-        videoId='f-s_Vv82yFw'
-        onStateChange={this._onVideoStateChange.bind(this)}
-      />
-      <SubtitlePlayer
-        startTimestamp={this.state.startTimestamp}
-      />
-    </div>)
-  }
-
-  private _onVideoStateChange(data: YouTubeEvent) {
+  const _onVideoStateChange = (data: YouTubeEvent) => {
     console.log(data.target.getCurrentTime());
 
-    this.setState({ startTimestamp: data.target.getCurrentTime() * 1000 });
-  }
-}
+    setState({ ...state, startTimestamp: data.target.getCurrentTime() * 1000 });
+  };
+
+  return (
+    <>
+      <YouTube videoId="f-s_Vv82yFw" onStateChange={_onVideoStateChange} />
+      <SubtitlePlayer startTimestamp={state.startTimestamp} />
+    </>
+  );
+};
 
 export default VideoPlayer;
