@@ -1,15 +1,19 @@
 import { FC } from "react";
 
-import styles from "./Footer.module.scss";
+import "./Footer.css";
 
 interface FooterProps {}
 
 const Footer: FC<FooterProps> = () => (
-  <main className={styles.main}>
-    <a href="/legal.txt">mentions légales</a> —{" "}
-    <a target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v=1flEYHtgVmg">
-      la réf
+  <main className="footer">
+    <a
+      target="_blank"
+      rel="noreferrer"
+      href="https://www.youtube.com/watch?v=1flEYHtgVmg"
+    >
+      la réf ❤️
     </a>
+    — (<a href="/legal.txt">mentions légales</a> )
   </main>
 );
 

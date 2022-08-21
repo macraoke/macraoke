@@ -1,6 +1,6 @@
-main.footer {
+.footer {
     display: flex;
     flex-direction: row;
-    padding: 0 50px;
+    padding: 20px 0 0;
     justify-content: flex-start;
 }

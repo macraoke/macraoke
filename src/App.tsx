@@ -1,17 +1,17 @@
-import "./App.scss";
-import Footer from "./components/Footer/Footer";
+import "./App.css";
 import Header from "./components/Header/Header";
-import VideoPlayer from './components/VideoPlayer/VideoPlayer';
+import VideoPlayer from "./components/VideoPlayer/VideoPlayer";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
-    <>
+    <div className="App">
       <Header />
       <div className="player">
         <VideoPlayer />
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 
