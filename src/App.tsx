@@ -1,14 +1,14 @@
 import "./App.scss";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
-import SubtitlePlayer from './components/SubtitlePlayer/SubtitlePlayer.lazy';
+import VideoPlayer from './components/VideoPlayer/VideoPlayer.lazy';
 
 function App() {
   return (
     <>
       <Header />
       <div className="player">
-        <SubtitlePlayer />
+        <VideoPlayer />
       </div>
       <Footer />
     </>
