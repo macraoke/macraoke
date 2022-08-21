@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <Header />
       <div className="player">
-        <VideoPlayer />
+        <VideoPlayer videoId="f-s_Vv82yFw" />
       </div>
       <Footer />
     </div>
