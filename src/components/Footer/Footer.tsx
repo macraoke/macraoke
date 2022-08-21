@@ -2,18 +2,46 @@ import { FC } from "react";
 
 import "./Footer.css";
 
-interface FooterProps {}
+interface FooterProps { }
 
 const Footer: FC<FooterProps> = () => (
   <main className="footer">
-    <a
-      target="_blank"
-      rel="noreferrer"
-      href="https://www.youtube.com/watch?v=1flEYHtgVmg"
-    >
-      la réf ❤️
-    </a>
-    — (<a href="/legal.txt">mentions légales</a> )
+    <p>
+      Inspiré par
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href="https://www.youtube.com/watch?v=1flEYHtgVmg"
+      >
+        David Castello-Lopes ❤️
+      </a>
+    </p>
+    <p>
+      Publication:
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href="https://twitter.com/ValentinViennot"
+      >
+        @ValentinViennot
+      </a>
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href="https://twitter.com/roger_miret"
+      >
+        @roger_miret
+      </a>
+      — (<a href="/legal.txt">Mentions légales</a> )
+      —
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href="https://github.com/macraoke/macraoke"
+      >
+        Code source
+      </a>
+    </p>
   </main>
 );
 
