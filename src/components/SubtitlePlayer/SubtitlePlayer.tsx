@@ -7,15 +7,9 @@ interface SubtitlePlayerProps {
   subtexts: Subtext[];
 }
 
-interface SubtitlePlayerState {
-  subtextId?: number;
-}
-
 const SubtitlePlayer: React.FC<SubtitlePlayerProps> = (props) => {
 
-  const [state, setState] = useState<SubtitlePlayerState>({
-    subtextId: 0
-  });
+  const [subtextId, setSubtextId] = useState<number|undefined>(undefined);
 
   const findNextSubTextId = (id: number): number | undefined => {
     if (id >= props.subtexts.length) return undefined;
@@ -32,15 +26,12 @@ const SubtitlePlayer: React.FC<SubtitlePlayerProps> = (props) => {
   };
 
   useEffect(() => {
-    setState(state => ({
-      ...state,
-      subtextId: findNextSubTextId(state.subtextId || 0)
-    }));
+    setSubtextId(subtextId => findNextSubTextId(subtextId || 0));
   }, [props.timestamp]);
 
   return (
     <>
-      <p>{state.subtextId !== undefined && props.subtexts[state.subtextId].text}</p>
+      <p>{subtextId !== undefined && subtextId < props.subtexts.length && props.subtexts[subtextId].text}</p>
     </>
   );
 };
