@@ -9,7 +9,8 @@ interface SubtitlePlayerProps {
 
 const SubtitlePlayer: React.FC<SubtitlePlayerProps> = (props) => {
 
-  const [subtextId, setSubtextId] = useState<number|undefined>(undefined);
+  const [subtextId, setSubtextId] = useState<number | undefined>(undefined);
+  const [nextSubtextId, setNextSubtextId] = useState<number>(0);
 
   const findNextSubTextId = (id: number): number | undefined => {
     if (id >= props.subtexts.length) return undefined;
@@ -29,9 +30,14 @@ const SubtitlePlayer: React.FC<SubtitlePlayerProps> = (props) => {
     setSubtextId(subtextId => findNextSubTextId(subtextId || 0));
   }, [props.timestamp]);
 
+  useEffect(() => {
+    setNextSubtextId((subtextId || 0) + 1);
+  }, [subtextId])
+
   return (
     <>
       <p>{subtextId !== undefined && subtextId < props.subtexts.length && props.subtexts[subtextId].text}</p>
+      <p>{nextSubtextId < props.subtexts.length && props.subtexts[nextSubtextId].text}</p>
     </>
   );
 };
