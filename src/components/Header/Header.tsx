@@ -17,6 +17,7 @@ const Header: FC<HeaderProps> = () => {
         <button onClick={a} className="mr-3">Random</button>
         <button onClick={a} className="mr-3">Top 10</button>
         <button onClick={a} className="mr-3">?</button>
+        <button onClick={a} className="mr-3">Nous offrir une bière</button>
       </div>
     </main>
   );
