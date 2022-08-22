@@ -14,7 +14,7 @@ const UPDATE_INTERVAL = 100;
 const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
   const [playing, setPlaying] = useState<boolean>(false);
   const [timestamp, setTimestamp] = useState<number>(0);
-  const [subtexts, setSubtexts] = useState<Subtext[] | undefined>(undefined);
+  const [subtexts, setSubtexts] = useState<Subtext[]>([]);
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
 
   const myRef = createRef<YouTube>();
@@ -65,8 +65,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
         }}
         onStateChange={onVideoStateChange}
       />
-      <p>{timestamp}</p>
-      {!!subtexts && subtexts.length > 0 && (
+      {subtexts.length > 0 && (
         <SubtitlePlayer timestamp={timestamp} subtexts={subtexts} />
       )}
       <button onClick={() => myRef.current?.getInternalPlayer().playVideo()}>
