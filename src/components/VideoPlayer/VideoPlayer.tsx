@@ -66,7 +66,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
         onStateChange={onVideoStateChange}
       />
       {subtexts.length > 0 && (
-        <SubtitlePlayer timestamp={timestamp} subtexts={subtexts} />
+        <SubtitlePlayer timestamp={timestamp + 500} subtexts={subtexts} />
       )}
       <button onClick={() => myRef.current?.getInternalPlayer().playVideo()}>
         PLAY
