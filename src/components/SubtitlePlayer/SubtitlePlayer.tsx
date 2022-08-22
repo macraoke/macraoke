@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Subtext } from '../../interfaces/Subtext';
+import Subtitle from '../Subtitle/Subtitle';
 import './SubtitlePlayer.module.scss';
 
 interface SubtitlePlayerProps {
@@ -31,13 +32,16 @@ const SubtitlePlayer: React.FC<SubtitlePlayerProps> = (props) => {
   }, [props.timestamp]);
 
   useEffect(() => {
-    setNextSubtextId((subtextId || 0) + 1);
+    setNextSubtextId(subtextId === undefined ? nextSubtextId : subtextId + 1);
   }, [subtextId])
 
   return (
     <>
-      <p>{subtextId !== undefined && subtextId < props.subtexts.length && props.subtexts[subtextId].text}</p>
-      <p>{nextSubtextId < props.subtexts.length && props.subtexts[nextSubtextId].text}</p>
+      {subtextId !== undefined && subtextId < props.subtexts.length && (
+        <Subtitle subtext={props.subtexts[subtextId]} />
+      )}
+      {/* TODO: refactor to Subtitle but deactivated */}
+      <Subtitle subtext={props.subtexts[nextSubtextId]} deactivated />
     </>
   );
 };
