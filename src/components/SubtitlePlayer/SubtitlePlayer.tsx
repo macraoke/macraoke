@@ -36,13 +36,13 @@ const SubtitlePlayer: React.FC<SubtitlePlayerProps> = (props) => {
   }, [subtextId])
 
   return (
-    <>
+    <div className="absolute bottom-0 w-full text-center text-3xl font-bold px-6 py-10 bg-black/75">
       {subtextId !== undefined && subtextId < props.subtexts.length && (
         <Subtitle subtext={props.subtexts[subtextId]} />
       )}
       {/* TODO: refactor to Subtitle but deactivated */}
       <Subtitle subtext={props.subtexts[nextSubtextId]} deactivated />
-    </>
+    </div>
   );
 };
 

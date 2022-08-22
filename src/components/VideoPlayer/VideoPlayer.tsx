@@ -41,27 +41,29 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
 
   return (
     <>
-      <YouTube
-        videoId={props.videoId}
-        ref={myRef}
-        style={{ width: "100%", height: "calc(100vh - 230px)" }}
-        opts={{
-          width: "100%",
-          height: "100%",
-          playerVars: {
-            autoplay: 1,
-            modestbranding: 1,
-            controls: 0,
-            cc_load_policy: 3,
-            iv_load_policy: 3,
-            rel: 0,
-          },
-        }}
-        onStateChange={onVideoStateChange}
-      />
-      {subtexts.length > 0 && (
-        <SubtitlePlayer timestamp={timestamp + 500} subtexts={subtexts} />
-      )}
+      <div className="relative">
+        <YouTube
+          videoId={props.videoId}
+          ref={myRef}
+          style={{ width: "100%", height: "calc(100vh - 230px)" }}
+          opts={{
+            width: "100%",
+            height: "100%",
+            playerVars: {
+              autoplay: 1,
+              modestbranding: 1,
+              controls: 0,
+              cc_load_policy: 3,
+              iv_load_policy: 3,
+              rel: 0,
+            },
+          }}
+          onStateChange={onVideoStateChange}
+        />
+        {subtexts.length > 0 && (
+          <SubtitlePlayer timestamp={timestamp + 500} subtexts={subtexts} />
+        )}
+      </div>
       <button onClick={() => myRef.current?.getInternalPlayer().playVideo()}>
         PLAY
       </button>
