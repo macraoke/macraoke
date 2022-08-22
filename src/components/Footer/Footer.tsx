@@ -2,12 +2,12 @@ import { FC } from "react";
 
 import "./Footer.css";
 
-interface FooterProps { }
+interface FooterProps {}
 
 const Footer: FC<FooterProps> = () => (
   <main className="footer">
-    <p>
-      Inspiré par
+    <p className="mr-4">
+      Inspiré par{" "}
       <a
         target="_blank"
         rel="noreferrer"
@@ -17,23 +17,22 @@ const Footer: FC<FooterProps> = () => (
       </a>
     </p>
     <p>
-      Publication:
+      Publication:{" "}
       <a
         target="_blank"
         rel="noreferrer"
         href="https://twitter.com/ValentinViennot"
       >
         @ValentinViennot
-      </a>
+      </a>{" "}&amp;{" "}
       <a
         target="_blank"
         rel="noreferrer"
         href="https://twitter.com/roger_miret"
       >
         @roger_miret
-      </a>
-      — (<a href="/legal.txt">Mentions légales</a> )
-      —
+      </a>{" "}
+      — (<a href="legal.txt">Mentions&nbsp;légales</a>) —{" "}
       <a
         target="_blank"
         rel="noreferrer"
