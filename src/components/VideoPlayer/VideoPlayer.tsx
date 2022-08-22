@@ -20,7 +20,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
   const myRef = createRef<YouTube>();
 
   const loadSubtitles = async () => {
-    const response = await fetch(`/subtitles/${props.videoId}.srt`);
+    const response = await fetch(`subtitles/${props.videoId}.srt`);
     setSubtexts(parseSRT(await response.text()) as Subtext[]);
   }
 
