@@ -1,5 +1,5 @@
 import parseSRT from "parse-srt";
-import React, { useEffect, createRef, useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import YouTube, { YouTubeEvent } from "react-youtube";
 import { Subtext } from '../../interfaces/Subtext';
 import SubtitlePlayer from '../SubtitlePlayer/SubtitlePlayer';
@@ -10,13 +10,13 @@ interface VideoPlayerProps {
 }
 
 const UPDATE_INTERVAL = 100;
+const isEventPlaying = (event: YouTubeEvent) => event.target.getPlayerState() === YouTube.PlayerState.PLAYING;
 
 const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
   const [playing, setPlaying] = useState<boolean>(false);
   const [timestamp, setTimestamp] = useState<number>(0);
   const [subtexts, setSubtexts] = useState<Subtext[]>([]);
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
-
   const myRef = createRef<YouTube>();
 
   const loadSubtitles = async () => {
@@ -24,26 +24,20 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
     setSubtexts(parseSRT(await response.text()) as Subtext[]);
   }
 
-  const onVideoStateChange = (event: YouTubeEvent) => {
-    setPlaying(event.target.getPlayerState() === YouTube.PlayerState.PLAYING);
+  const nextBeat = (event: YouTubeEvent) => {
     setTimestamp(Math.ceil(event.target.getCurrentTime() * 1000));
+    if (isEventPlaying(event))
+      setTimeout(nextBeat, UPDATE_INTERVAL, event);
   };
 
-  const nextBeat = () => {
-    setTimestamp(timestamp => timestamp + UPDATE_INTERVAL);
+  const onVideoStateChange = (event: YouTubeEvent) => {
+    setPlaying(isEventPlaying(event));
+    nextBeat(event);
   };
 
   useEffect(() => {
     loadSubtitles();
   }, [props.videoId]);
-
-  useEffect(() => {
-    clearInterval(intervalId);
-    if (playing)
-      setIntervalId(setInterval(nextBeat, UPDATE_INTERVAL));
-    else
-      setIntervalId(undefined);
-  }, [playing])
 
   return (
     <>
