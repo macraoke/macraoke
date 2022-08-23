@@ -40,8 +40,9 @@ const SubtitlePlayer: React.FC<SubtitlePlayerProps> = (props) => {
       {subtextId !== undefined && subtextId < props.subtexts.length && (
         <Subtitle subtext={props.subtexts[subtextId]} />
       )}
-      {/* TODO: refactor to Subtitle but deactivated */}
+      {nextSubtextId < props.subtexts.length && (
       <Subtitle subtext={props.subtexts[nextSubtextId]} deactivated />
+      )}
     </div>
   );
 };
