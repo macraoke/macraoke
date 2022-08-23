@@ -14,6 +14,7 @@ const Subtitle: React.FC<SubtitleProps> = (props) => {
   const [words, setWords] = useState<IWord[]>([]);
 
   useEffect(() => {
+    if (props.subtext === undefined) return;
     const duration = Math.ceil((props.subtext.end - props.subtext.start) * 1000);
     const words = props.subtext.text.replace('<br />', ' ').split(' ');
     const averageDuration = duration / words.length;
