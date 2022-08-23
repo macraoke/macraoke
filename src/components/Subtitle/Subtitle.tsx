@@ -11,12 +11,9 @@ interface SubtitleProps {
 
 const Subtitle: React.FC<SubtitleProps> = (props) => {
 
-  const [nextWordId, setNextWordId] = useState<number>(0);
   const [words, setWords] = useState<IWord[]>([]);
 
   useEffect(() => {
-    setNextWordId(0);
-    // TODO: calc word duration function of word length and sentence duration
     const duration = Math.ceil((props.subtext.end - props.subtext.start) * 1000);
     const words = props.subtext.text.replace('<br />', ' ').split(' ');
     const averageDuration = duration / words.length;
@@ -33,9 +30,5 @@ const Subtitle: React.FC<SubtitleProps> = (props) => {
     </p></>
   );
 };
-
-// TODO
-// - split words
-// - duration --> highlight words slowly
 
 export default Subtitle;
