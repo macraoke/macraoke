@@ -4,3 +4,5 @@ export interface Subtext {
     end: number;
     text: string;
 }
+
+export const SUBTEXT_DURATION = 600;
