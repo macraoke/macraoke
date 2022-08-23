@@ -13,10 +13,8 @@ const UPDATE_INTERVAL = 100;
 const isEventPlaying = (event: YouTubeEvent) => event.target.getPlayerState() === YouTube.PlayerState.PLAYING;
 
 const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
-  const [playing, setPlaying] = useState<boolean>(false);
   const [timestamp, setTimestamp] = useState<number>(0);
   const [subtexts, setSubtexts] = useState<Subtext[]>([]);
-  const [intervalId, setIntervalId] = useState<number | undefined>(undefined);
   const myRef = createRef<YouTube>();
 
   const loadSubtitles = async () => {
@@ -31,7 +29,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
   };
 
   const onVideoStateChange = (event: YouTubeEvent) => {
-    setPlaying(isEventPlaying(event));
     nextBeat(event);
   };
 
