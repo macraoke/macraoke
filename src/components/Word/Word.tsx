@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IWord } from '../../interfaces/Word';
-import './Word.css';
+import './Word.scss';
 
 interface WordProps extends IWord { }
 
