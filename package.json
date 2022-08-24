@@ -12,6 +12,7 @@
     "parse-srt": "^1.0.0-alpha",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.3.0",
     "react-youtube": "^9.0.3"
   },
   "devDependencies": {

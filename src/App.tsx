@@ -1,17 +1,18 @@
+import { Routes, Route } from "react-router-dom";
+
 import "./App.css";
-import Header from "./components/Header/Header";
-import VideoPlayer from "./components/VideoPlayer/VideoPlayer";
-import Footer from "./components/Footer/Footer";
+import Forwarder from "./pages/Forwarder/Forwarder";
+import Player from "./pages/Player/Player";
+import TopVideos from "./pages/TopVideos/TopVideos";
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <div className="player">
-        <VideoPlayer videoId="0LxIfs_TbfM" />
-        {/* f-s_Vv82yFw */}
-      </div>
-      <Footer />
+      <Routes>
+        <Route path="/" element={<Forwarder />} />
+        <Route path="/top" element={<TopVideos />} />
+        <Route path="/:video/" element={<Player />} />
+      </Routes>
     </div>
   );
 }
