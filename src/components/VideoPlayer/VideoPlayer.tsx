@@ -17,6 +17,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
   const [duration, setDuration] = useState<number>(0);
   const [subtexts, setSubtexts] = useState<Subtext[]>([]);
   const [player, setPlayer] = useState<YouTubePlayer | undefined>(undefined);
+  const [timeoutId, setTimeoutId] = useState<number | undefined>(undefined);
   const myRef = createRef<YouTube>();
 
   const loadSubtitles = async () => {
@@ -32,15 +33,24 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
     setSubtexts([first321subtext, ...loadedSubtexts]);
   }
 
-  const nextBeat = (event: YouTubeEvent) => {
-    if (!player) setPlayer(event.target);
-    setTimestamp(Math.ceil(event.target.getCurrentTime() * 1000));
-    if (isPlayerPlaying(event.target))
-      setTimeout(nextBeat, UPDATE_INTERVAL, event);
+  const nextBeat = (player: YouTubePlayer) => {
+    if (!player) return;
+    setTimestamp(Math.ceil(player.getCurrentTime() * 1000));
+    setTimeoutId(timeoutId => {
+      clearTimeout(timeoutId);
+      let newTimer: number | undefined = undefined;
+      if (isPlayerPlaying(player))
+        newTimer = setTimeout(() => nextBeat(player), UPDATE_INTERVAL);
+      return newTimer;
+
+    });
   };
 
   const onVideoStateChange = (event: YouTubeEvent) => {
-    nextBeat(event);
+    clearTimeout(timeoutId);
+    if (event.target !== player && !!event.target)
+      setPlayer(event.target);
+    if (!!event.target && isPlayerPlaying(event.target)) nextBeat(event.target);
   };
 
   const onSeekerUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,20 +60,25 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
   };
 
   useEffect(() => {
+    clearTimeout(timeoutId);
+    setPlayer(undefined);
+    setTimestamp(0);
+    setSubtexts([]);
     loadSubtitles();
   }, [props.videoId]);
 
   useEffect(() => {
-    if (!!player)
-      setDuration(player.getDuration() * 1000);
+    setTimeout(() =>
+      setDuration(!!player ? player.getDuration() * 1000 : 0), 1500
+    );
   }, [player]);
 
   return (
     <>
       <div className="relative">
         <YouTube
-          videoId={props.videoId}
           ref={myRef}
+          videoId={props.videoId}
           className="w-full"
           style={{ height: "calc(100vh - 230px)" }}
           opts={{
