@@ -1,6 +1,6 @@
 import parseSRT from "parse-srt";
 import React, { createRef, useEffect, useState } from "react";
-import YouTube, { YouTubeEvent } from "react-youtube";
+import YouTube, { YouTubeEvent, YouTubePlayer } from "react-youtube";
 import { Subtext, SUBTEXT_DURATION } from '../../interfaces/Subtext';
 import SubtitlePlayer from '../SubtitlePlayer/SubtitlePlayer';
 import "./VideoPlayer.module.scss";
@@ -9,12 +9,14 @@ interface VideoPlayerProps {
   videoId: string;
 }
 
-const UPDATE_INTERVAL = 100;
-const isEventPlaying = (event: YouTubeEvent) => event.target.getPlayerState() === YouTube.PlayerState.PLAYING;
+const UPDATE_INTERVAL = 200;
+const isPlayerPlaying = (player: YouTubePlayer) => player.getPlayerState() === YouTube.PlayerState.PLAYING;
 
 const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
   const [timestamp, setTimestamp] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
   const [subtexts, setSubtexts] = useState<Subtext[]>([]);
+  const [player, setPlayer] = useState<YouTubePlayer | undefined>(undefined);
   const myRef = createRef<YouTube>();
 
   const loadSubtitles = async () => {
@@ -31,8 +33,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
   }
 
   const nextBeat = (event: YouTubeEvent) => {
+    if (!player) setPlayer(event.target);
     setTimestamp(Math.ceil(event.target.getCurrentTime() * 1000));
-    if (isEventPlaying(event))
+    if (isPlayerPlaying(event.target))
       setTimeout(nextBeat, UPDATE_INTERVAL, event);
   };
 
@@ -40,9 +43,20 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
     nextBeat(event);
   };
 
+  const onSeekerUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const toTimestamp = parseInt(event.target.value);
+    player.seekTo(toTimestamp / 1000);
+    setTimestamp(toTimestamp);
+  };
+
   useEffect(() => {
     loadSubtitles();
   }, [props.videoId]);
+
+  useEffect(() => {
+    if (!!player)
+      setDuration(player.getDuration() * 1000);
+  }, [player]);
 
   return (
     <>
@@ -50,7 +64,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
         <YouTube
           videoId={props.videoId}
           ref={myRef}
-          style={{ width: "100%", height: "calc(100vh - 230px)" }}
+          className="w-full"
+          style={{ height: "calc(100vh - 230px)" }}
           opts={{
             width: "100%",
             height: "100%",
@@ -65,13 +80,24 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
           }}
           onStateChange={onVideoStateChange}
         />
-        {subtexts.length > 0 && (
+        {!!player && subtexts.length > 0 && (
           <SubtitlePlayer timestamp={timestamp + SUBTEXT_DURATION} subtexts={subtexts} />
         )}
       </div>
-      <button onClick={() => myRef.current?.getInternalPlayer().playVideo()}>
-        PLAY
-      </button>
+
+      {!!player && (
+        <div className="w-full">
+          <a onClick={() => isPlayerPlaying(player) ? player.pauseVideo() : player.playVideo()} >
+            Play/Pause
+          </a>
+          <input type="range" id="volume" name="volume"
+            min={0}
+            max={duration}
+            value={timestamp}
+            onChange={onSeekerUpdate} />
+        </div>
+      )}
+
     </>
   );
 };
