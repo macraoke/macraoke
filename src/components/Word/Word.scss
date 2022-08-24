@@ -11,10 +11,11 @@
 span {
     font-family: 'Sriracha', 'Times New Roman', Times, serif;
     font-weight: bold;
-    transition: color ease-in 0.4s;
-    transition: text-shadow ease-in 0.6s;
-
+    transition-duration: 0ms;
+    
     &.on {
+        transition: color ease-in 0.4s;
+        transition: text-shadow ease-in 0.6s;
         --interval: 1s;
         // display: block;
         text-shadow:
