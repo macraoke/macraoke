@@ -2,17 +2,19 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer";
 import Footer from "./components/Footer/Footer";
+import { Provider } from "./context/Context";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <div className="player">
-        <VideoPlayer videoId="0LxIfs_TbfM" />
-        {/* f-s_Vv82yFw */}
+    <Provider>
+      <div className="App">
+        <Header />
+        <div className="player">
+          <VideoPlayer />
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </Provider>
   );
 }
 

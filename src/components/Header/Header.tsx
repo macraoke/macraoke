@@ -1,12 +1,19 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
+import Context from "../../context/Context";
 
 import "./Header.css";
 
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
-  const a = () => {
-    console.log("here");
+  const [_state, dispatch] = useContext(Context);
+
+  const top10 = () => {
+    console.log("top10");
+  };
+
+  const random = () => {
+    dispatch({ type: "GET_RANDOM_VIDEO_OTHER_THAN_CURRENT" });
   };
 
   const beer = () => {
@@ -20,14 +27,11 @@ const Header: FC<HeaderProps> = () => {
         Le karaoke avec les discours d'Emmanuel Macron
       </h2>
       <div className="flex flex-row">
-        <button onClick={a} className="mr-3">
+        <button onClick={random} className="mr-3">
           Random
         </button>
-        <button onClick={a} className="mr-3">
+        <button onClick={top10} className="mr-3">
           Top 10
-        </button>
-        <button onClick={a} className="mr-3">
-          ?
         </button>
         <button onClick={beer} className="mr-3">
           🍺 Nous offrir une bière
