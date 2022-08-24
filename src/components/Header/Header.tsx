@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getRandomVideo } from "../../interfaces/Video";
 
 import "./Header.css";
@@ -25,9 +25,6 @@ const Header: FC<HeaderProps> = () => {
   return (
     <main className="header grid grid-cols-1 mb-5">
       <h1 className="text-3xl font-bold mb-4">Macraoke</h1>
-      <h2 className="text-xl mb-4">
-        Le karaoke avec les discours d'Emmanuel Macron
-      </h2>
       <div className="flex flex-row">
         <button onClick={() => random()} className="mr-3">
           Random
