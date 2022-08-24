@@ -59,6 +59,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
     setTimestamp(toTimestamp);
   };
 
+  const setDurationOnReady = (event: YouTubeEvent) => {
+    setDuration(event.target.getDuration() * 1000);
+  };
+
   useEffect(() => {
     clearTimeout(timeoutId);
     setPlayer(undefined);
@@ -66,12 +70,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
     setSubtexts([]);
     loadSubtitles();
   }, [props.videoId]);
-
-  useEffect(() => {
-    setTimeout(() =>
-      setDuration(!!player ? player.getDuration() * 1000 : 0), 1500
-    );
-  }, [player]);
 
   return (
     <>
@@ -94,6 +92,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
             },
           }}
           onStateChange={onVideoStateChange}
+          onReady={setDurationOnReady}
         />
         {!!player && subtexts.length > 0 && (
           <SubtitlePlayer timestamp={timestamp + SUBTEXT_DURATION} subtexts={subtexts} />
